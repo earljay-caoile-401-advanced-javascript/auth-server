@@ -21,7 +21,7 @@ Users.statics.authenticateBasic = async function (username, password) {
   let query = { username };
   let user = await this.findOne(query);
   if (user) {
-    let isValid = bcrypt.compare(password, user.password);
+    let isValid = await bcrypt.compare(password, user.password);
     if (isValid) {
       return user;
     } else {

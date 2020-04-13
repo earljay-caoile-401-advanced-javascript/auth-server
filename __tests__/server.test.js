@@ -47,14 +47,26 @@ describe('auth server', () => {
     const user1 = new Users(signinObj);
     await user1.save();
 
-    const autHeader = base64.encode(`testingbobsaget:wrong-password1234`);
+    const realBadAuthHeader = base64.encode(
+      `testingbobsaget:wrong-password1234`,
+    );
 
     const signinResponse = await agent
       .post('/signin')
-      .set('authorization', `Basic ${autHeader}`);
+      .set('authorization', `Basic ${realBadAuthHeader}`);
 
-    expect(signinResponse.statusCode).toBe(401);
+    expect(signinResponse.statusCode).toBe(403);
     expect(signinResponse.body).toEqual({});
+
+    const wrongPasswordHeader = base64.encode(
+      `${signinObj.username}:wrong-password1234-again-555`,
+    );
+
+    const signinResponse2 = await agent
+      .post('/signin')
+      .set('authorization', `Basic ${wrongPasswordHeader}`);
+    expect(signinResponse2.statusCode).toBe(403);
+    expect(signinResponse2.body).toEqual({});
   });
 
   it('can return all users', async () => {
