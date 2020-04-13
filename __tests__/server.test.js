@@ -5,19 +5,23 @@ const Users = require('../auth/models/users.js');
 const base64 = require('base-64');
 
 describe('auth server', () => {
-  let signinObj;
-  let signinObj2;
+  const signinObj = {
+    username: 'john',
+    password: 'blue',
+  };
+
+  const signinObj2 = {
+    username: 'bob',
+    password: 'saget',
+  };
+
+  const badObj = {
+    notUsername: false,
+    password: 1.523,
+    someOtherProp: 'lulz',
+  };
 
   beforeEach(async () => {
-    signinObj = {
-      username: 'john',
-      password: 'blue',
-    };
-
-    signinObj2 = {
-      username: 'bob',
-      password: 'saget',
-    };
     await Users.deleteMany({}).exec();
   });
 
@@ -25,6 +29,14 @@ describe('auth server', () => {
     const signupResponse = await agent.post('/signup').send(signinObj);
     expect(signupResponse.statusCode).toBe(200);
     expect(!!signupResponse.text).toBeTruthy();
+  });
+
+  it('can console error for invalid signup', async () => {
+    jest.spyOn(global.console, 'error');
+    console.error = jest.fn();
+    const signupResponse = await agent.post('/signup').send(badObj);
+    expect(console.error).toHaveBeenCalled();
+    expect(signupResponse.statusCode).toBe(403);
   });
 
   it('can allow an existing user to sign in', async () => {
