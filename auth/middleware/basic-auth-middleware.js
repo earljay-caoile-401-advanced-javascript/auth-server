@@ -18,5 +18,8 @@ module.exports = (req, res, next) => {
       req.token = validUser.generateToken();
       next();
     })
-    .catch((err) => next(`Invalid Login! ${err}`));
+    .catch((err) => {
+      res.status(401).send('incorrect credentials');
+      next(`Incorrect credentials! ${err}`);
+    });
 };

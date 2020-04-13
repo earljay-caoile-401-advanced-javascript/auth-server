@@ -43,6 +43,20 @@ describe('auth server', () => {
     expect(!!signinResponse.text).toBeTruthy();
   });
 
+  it('will return a 401 error for incorrect login credentials', async () => {
+    const user1 = new Users(signinObj);
+    await user1.save();
+
+    const autHeader = base64.encode(`testingbobsaget:wrong-password1234`);
+
+    const signinResponse = await agent
+      .post('/signin')
+      .set('authorization', `Basic ${autHeader}`);
+
+    expect(signinResponse.statusCode).toBe(401);
+    expect(signinResponse.body).toEqual({});
+  });
+
   it('can return all users', async () => {
     const user1 = new Users(signinObj);
     const user2 = new Users(signinObj2);
@@ -72,5 +86,17 @@ describe('auth server', () => {
     const getResponse = await agent.get('/users');
     expect(getResponse.statusCode).toEqual(403);
     expect(getResponse.body).toEqual({});
+  });
+});
+
+describe('server start', () => {
+  it('will console log on start', () => {
+    console.log = jest.fn();
+    jest.spyOn(global.console, 'log');
+    server.authServer.listen = jest.fn((port) => {
+      console.log('running on', port);
+    });
+    server.start(3000);
+    expect(console.log).toHaveBeenCalled();
   });
 });
