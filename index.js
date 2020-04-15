@@ -2,7 +2,7 @@
 
 require('dotenv').config();
 const mongoose = require('mongoose');
-const server = require('./auth/server.js');
+const server = require('./lib/server.js');
 
 const mongooseOptions = {
   useNewUrlParser: true,

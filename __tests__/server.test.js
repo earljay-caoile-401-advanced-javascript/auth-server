@@ -1,7 +1,7 @@
 const supergoose = require('@code-fellows/supergoose');
-const server = require('../auth/server.js');
+const server = require('../lib/server.js');
 const agent = supergoose(server.authServer);
-const Users = require('../auth/models/users.js');
+const Users = require('../lib/models/users.js');
 const base64 = require('base-64');
 
 describe('auth server', () => {
