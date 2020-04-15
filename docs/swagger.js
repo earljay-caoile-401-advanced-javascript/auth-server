@@ -34,6 +34,7 @@ module.exports = (app) => {
           description: '',
         },
       },
+      security: [{ basicAuth: [] }],
       definitions: {
         user_response: {
           properties: {
