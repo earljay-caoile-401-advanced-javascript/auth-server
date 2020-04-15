@@ -30,12 +30,28 @@ module.exports = (app) => {
         JWT: {
           type: 'apiKey',
           in: 'header',
-          name: 'Authorization',
-          description: '',
+          name: 'authorization',
+          description: 'a basic authentication encoded string',
         },
       },
-      security: [{ basicAuth: [] }],
+      security: [{ basicAuth: [], JWT: [] }],
       definitions: {
+        user_request: {
+          properties: {
+            username: { type: 'string' },
+            password: { type: 'string' },
+          },
+          example: {
+            username: sampleData.users[0].username,
+            password: 'expletives555',
+          },
+          required: ['username', 'password'],
+        },
+        token: {
+          type: 'string',
+          example:
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWF0IjoxNTg2OTI0Nzg5fQ.d0xwMx3vwLqw_Z2Skoy5Wmpzv26CNkAwGl-tm4bazg8',
+        },
         user_response: {
           properties: {
             id: { type: 'string' },
@@ -43,7 +59,7 @@ module.exports = (app) => {
             password: { type: 'string' },
             __v: { type: 'number' },
           },
-          required: ['username', 'password'],
+          required: ['id', 'username', 'password'],
         },
         users: {
           properties: {
