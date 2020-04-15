@@ -17,13 +17,16 @@ module.exports = (app) => {
         version: '1.0.0',
       },
       host: process.env.HOST || 'localhost:3000', // damage control in case user doesn't fill out .env
-      basePath: '/api/v1',
+      basePath: '/',
       produces: ['application/json', 'application/xml'],
       schemes:
         !process.env.HOST || process.env.HOST.includes('localhost')
           ? ['http']
           : ['https'],
       securityDefinitions: {
+        basicAuth: {
+          type: 'basic',
+        },
         JWT: {
           type: 'apiKey',
           in: 'header',
@@ -31,7 +34,33 @@ module.exports = (app) => {
           description: '',
         },
       },
-      definitions: {},
+      definitions: {
+        user_response: {
+          properties: {
+            id: { type: 'string' },
+            username: { type: 'string' },
+            password: { type: 'string' },
+            __v: { type: 'number' },
+          },
+          required: ['username', 'password'],
+        },
+        users: {
+          properties: {
+            count: { type: 'number' },
+            results: {
+              type: 'array',
+              items: {
+                $ref: '#/definitions/user_response',
+              },
+            },
+          },
+          example: {
+            count: sampleData.users.length,
+            results: sampleData.users,
+          },
+          required: ['count', 'results'],
+        },
+      },
     },
     basedir: __dirname, //app absolute path
     files: ['../lib/routes/***.js'], //Path to the API handle folder
