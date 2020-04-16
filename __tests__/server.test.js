@@ -101,7 +101,7 @@ describe('auth server', () => {
     expect(getResponse.body.results[1].username).toEqual('bob');
   });
 
-  it('will return a blank object without authorization headers', async () => {
+  it('will return a 403 and blank object without authorization headers', async () => {
     const user1 = new Users(signinObj);
     const user2 = new Users(signinObj2);
     await user1.save(signinObj);
