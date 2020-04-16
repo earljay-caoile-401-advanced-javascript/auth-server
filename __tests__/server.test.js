@@ -55,7 +55,7 @@ describe('auth server', () => {
     expect(!!signinResponse.text).toBeTruthy();
   });
 
-  it('will return a 401 error for incorrect login credentials', async () => {
+  it('will return a 403 error for incorrect login credentials', async () => {
     const user1 = new Users(signinObj);
     await user1.save();
 
