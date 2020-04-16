@@ -12,8 +12,7 @@ Lab 10 and then some for CF JS 401 Nights (n16)
 
 - [submission PR](https://github.com/earljay-caoile-401-advanced-javascript/auth-server/pull/1)
 - [GitHub Actions](https://github.com/earljay-caoile-401-advanced-javascript/auth-server/actions)
-- [Heroku Deployment](https://cf-js-401-api-server.herokuapp.com/)
-- [Swagger API Documentation for Heroku Deployment](https://cf-js-401-api-server.herokuapp.com/api-docs)
+- [Swagger API Documentation (Heroku Deployment)](https://cf-js-401-auth-server.herokuapp.com/api-docs)
 
 #### Resources
 
