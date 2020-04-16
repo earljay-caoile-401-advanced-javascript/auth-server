@@ -51,4 +51,4 @@ As of this revision, you need to put in the HOST variable as well.
 
 ### UML
 
-![UML Image](lab-09-uml.png "uml diagram")
+![UML Image](lab-10-uml.png "uml diagram")
