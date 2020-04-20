@@ -7,10 +7,14 @@
       "__v": 0
     },
     {
-      "_id": "5e966307bfa33812bc66e99b",
-      "username": "snorlax",
-      "password": "$2b$05$DX7gIzJOcSWMUGri023dw.5he2sAu60p65CNwgg6sC9rDal8vlgLK",
-      "__v": 0
+      "_id": "5e9d59fb9667520d046cfece",
+      "username": "testuser123",
+      "password": "$2b$05$2snIO4qcKhG7ZvNHd8.itucw5LdIOM0dt0Jtds2fFNZj1k7pg9zQe",
+      "__v": 0,
+      "currentToken": "$2b$05$5PtRb9qiIc2fgdeC603U..y4SpNjr4NaoOuMQWf1PgBnOYYl97diu"
     }
+  ],
+  "tokens": [
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyMTIzIiwiaGFzaCI6IiQyYiQwNSQ1OUI2d1dCMG03a21ROUVvNHdrR1Z1NUJuMVUvUVJCLllsd1NmT2tFT1hmengub3BzRXlWbSIsImlhdCI6MTU4NzQxMjk0MH0.nym85I8yKUGRT_mk3mIZT78_3RhWZfdUv3WuqHUuZR4"
   ]
 }

@@ -42,15 +42,14 @@ module.exports = (app) => {
             password: { type: 'string' },
           },
           example: {
-            username: sampleData.users[0].username,
-            password: 'expletives555',
+            username: sampleData.users[1].username,
+            password: 'password123',
           },
           required: ['username', 'password'],
         },
         token: {
           type: 'string',
-          example:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWF0IjoxNTg2OTI0Nzg5fQ.d0xwMx3vwLqw_Z2Skoy5Wmpzv26CNkAwGl-tm4bazg8',
+          example: sampleData.tokens[0],
         },
         user_response: {
           properties: {
@@ -74,8 +73,19 @@ module.exports = (app) => {
           example: {
             count: sampleData.users.length,
             results: sampleData.users,
+            token: sampleData.tokens[0],
           },
           required: ['count', 'results'],
+        },
+        secret: {
+          properties: {
+            message: { type: 'string' },
+            token: { type: 'string' },
+          },
+          example: {
+            message: 'You have access to dirty secrets, testuser123. Welcome!',
+            token: sampleData.tokens[0],
+          },
         },
       },
     },
