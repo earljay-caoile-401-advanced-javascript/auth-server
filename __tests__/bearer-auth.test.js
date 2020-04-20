@@ -4,34 +4,25 @@ const agent = supergoose(server.authServer);
 const Users = require('../lib/models/users.js');
 const base64 = require('base-64');
 
-describe('auth server', () => {
+describe('bearer auth', () => {
   const signinObj = {
     username: 'john',
     password: 'blue',
   };
 
-  const signinObj2 = {
-    username: 'bob',
-    password: 'saget',
-  };
-
-  const badObj = {
-    notUsername: false,
-    password: 1.523,
-    someOtherProp: 'lulz',
-  };
-
   const oldToken =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG4iLCJpYXQiOjE1ODczNDQxMjN9.EL2i0fDBdh0jPxJYMucI2fk2o9-YepMHeybnFTpZ1x8';
 
-  afterEach(async () => {
+  beforeAll(async () => {
+    const user1 = new Users(signinObj);
+    await user1.save();
+  });
+
+  afterAll(async () => {
     await Users.deleteMany({}).exec();
   });
 
   it('can access the secret route', async () => {
-    const user1 = new Users(signinObj);
-    await user1.save();
-
     const autHeader = base64.encode(
       `${signinObj.username}:${signinObj.password}`,
     );
@@ -41,7 +32,6 @@ describe('auth server', () => {
       .set('authorization', `Basic ${autHeader}`);
 
     const token = signinResponse.text;
-    console.log(token);
     const secretResponse = await agent
       .get('/secret')
       .set('authorization', `Bearer ${token}`);
@@ -52,11 +42,6 @@ describe('auth server', () => {
   });
 
   it('will return a 403 and blank object without authorization headers', async () => {
-    const user1 = new Users(signinObj);
-    const user2 = new Users(signinObj2);
-    await user1.save(signinObj);
-    await user2.save(signinObj2);
-
     const secretResponse = await agent.get('/secret');
     expect(secretResponse.statusCode).toEqual(403);
     expect(secretResponse.body).toEqual({});
@@ -66,19 +51,14 @@ describe('auth server', () => {
     process.env.TIME_SENSITIVE = true;
     jest.spyOn(global.console, 'error');
 
-    const user1 = new Users(signinObj);
-    await user1.save(signinObj);
-
     const secretResponse = await agent
       .get('/secret')
       .set('authorization', `Bearer ${oldToken}`);
     expect(secretResponse.statusCode).toEqual(403);
   });
 
-  it('will return a 500 for a dummy error', async () => {
-    Users.authenticateWithToken = jest.fn(async () => {
-      throw 'dummy error';
-    });
+  it('will allow a token to be used only once when one-use tokens are enabled', async () => {
+    process.env.ONE_TIME_TOKEN = true;
 
     const autHeader = base64.encode(
       `${signinObj.username}:${signinObj.password}`,
@@ -93,9 +73,23 @@ describe('auth server', () => {
     const secretResponse = await agent
       .get('/secret')
       .set('authorization', `Bearer ${token}`);
+    expect(secretResponse.statusCode).toBe(200);
+
+    const secondSecretRes = await agent
+      .get('/secret')
+      .set('authorization', `Bearer ${token}`);
+
+    expect(secondSecretRes.statusCode).toBe(403);
+    expect(secondSecretRes.text).toBe('invalid token');
+  });
+
+  it('will properly throw a 500 error and return an error object', async () => {
+    const secretResponse = await agent
+      .get('/secret')
+      .set('authorization', 'blahblah fakeauthorzation555!!!!!!!!!!');
 
     expect(secretResponse.statusCode).toEqual(500);
     expect(secretResponse.body.text).toBe('Server crashed!');
-    expect(secretResponse.body.error).toBe('dummy error');
+    expect(secretResponse.body.error).toBe('jwt malformed');
   });
 });
