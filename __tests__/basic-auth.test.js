@@ -4,7 +4,7 @@ const agent = supergoose(server.authServer);
 const Users = require('../lib/models/users.js');
 const base64 = require('base-64');
 
-describe('auth server', () => {
+describe('basic auth server', () => {
   const signinObj = {
     username: 'john',
     password: 'blue',
