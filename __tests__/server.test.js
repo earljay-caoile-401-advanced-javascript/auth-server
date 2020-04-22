@@ -111,6 +111,26 @@ describe('auth server', () => {
     expect(getResponse.statusCode).toEqual(403);
     expect(getResponse.body).toEqual({});
   });
+
+  it('will properly throw a 500 error and return an error object', async () => {
+    const user1 = new Users(signinObj);
+    await user1.save(signinObj);
+
+    Users.authenticateBasic = jest.fn(async () => {
+      throw new Error('dummy error');
+    });
+
+    const autHeader = base64.encode(
+      `${signinObj.username}:${signinObj.password}`,
+    );
+
+    const getResponse = await agent
+      .get('/users')
+      .set('authorization', `Basic ${autHeader}`);
+
+    expect(getResponse.statusCode).toEqual(500);
+    expect(getResponse.body.text).toBe('Server crashed!');
+  });
 });
 
 describe('server start', () => {
