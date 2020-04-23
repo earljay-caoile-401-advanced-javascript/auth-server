@@ -1,0 +1,16 @@
+{
+  "users": [
+    {
+      "_id": "5e965dc1bfa33812bc66e996",
+      "username": "bob_saget",
+      "password": "$2b$05$JuAyRZjIuNhHDpkdgIAzIu2UaFR/Bs6AdZdiZTLuRR6uxRtYVcXIe",
+      "__v": 0
+    },
+    {
+      "_id": "5e966307bfa33812bc66e99b",
+      "username": "snorlax",
+      "password": "$2b$05$DX7gIzJOcSWMUGri023dw.5he2sAu60p65CNwgg6sC9rDal8vlgLK",
+      "__v": 0
+    }
+  ]
+}
