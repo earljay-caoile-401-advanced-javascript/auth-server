@@ -8,6 +8,7 @@ describe('bearer auth', () => {
   const signinObj = {
     username: 'john',
     password: 'blue',
+    role: 'guest',
   };
 
   const oldToken =
