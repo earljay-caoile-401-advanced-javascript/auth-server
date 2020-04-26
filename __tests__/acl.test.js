@@ -4,6 +4,8 @@ const agent = supergoose(server.authServer);
 const Users = require('../lib/models/users.js');
 const base64 = require('base-64');
 
+console.log = jest.fn();
+
 describe('public page', () => {
   it('can be seen by anyone', async () => {
     const publicRes = await agent.get('/public');
