@@ -1,8 +1,8 @@
-# Lab 13 — Bearer Authorization
+# Lab 14 — Access Control
 
-## An Express server with basic and bearer authentication
+## An Express server with basic and bearer authentication plus ACL!
 
-Lab 10 to 13 for CF JS 401 Nights (n16)
+Lab 10 to 14 for CF JS 401 Nights (n16)
 
 ### Author: Earl Jay Caoile
 
@@ -32,13 +32,15 @@ Lab 10 to 13 for CF JS 401 Nights (n16)
 #### Configuring MongoDB
 
 - create an .env file on the top level of this repo with the following information:
-  ``` 
+
+  ```
   PORT=3000
   HOST=localhost:3000
   MONGODB_URI=mongodb://localhost:27017/auth-server
   ```
 
   You can optionally add the following:
+
   ```
   TIME_SENSITIVE=true
   ONE_TIME_TOKEN=true
@@ -51,7 +53,7 @@ Lab 10 to 13 for CF JS 401 Nights (n16)
 - start the server with `nodemon index.js`
 
 **Note:** for Heroku deployment, `MONGODB_URI` needs to have a value filled out in settings. The mLab add-on handles this automatically by filling out the variable and giving you a MongoDB to use.
-As of this revision, you need to put in the HOST variable as well. 
+As of this revision, you need to put in the HOST variable as well.
 
 #### Tests
 
@@ -59,4 +61,4 @@ As of this revision, you need to put in the HOST variable as well.
 
 ### UML
 
-![UML Image](lab-13-uml.png "uml diagram")
+![UML Image](lab-14-uml.png "uml diagram")
