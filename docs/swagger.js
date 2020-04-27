@@ -40,10 +40,12 @@ module.exports = (app) => {
           properties: {
             username: { type: 'string' },
             password: { type: 'string' },
+            role: { type: 'string' },
           },
           example: {
             username: sampleData.users[1].username,
             password: 'password123',
+            role: sampleData.users[1].role,
           },
           required: ['username', 'password'],
         },
