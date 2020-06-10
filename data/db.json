@@ -10,6 +10,7 @@
       "_id": "5e9d59fb9667520d046cfece",
       "username": "testuser123",
       "password": "$2b$05$2snIO4qcKhG7ZvNHd8.itucw5LdIOM0dt0Jtds2fFNZj1k7pg9zQe",
+      "role": "guest",
       "__v": 0,
       "currentToken": "$2b$05$5PtRb9qiIc2fgdeC603U..y4SpNjr4NaoOuMQWf1PgBnOYYl97diu"
     }

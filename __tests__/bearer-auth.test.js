@@ -4,10 +4,13 @@ const agent = supergoose(server.authServer);
 const Users = require('../lib/models/users.js');
 const base64 = require('base-64');
 
+console.log = jest.fn();
+
 describe('bearer auth', () => {
   const signinObj = {
     username: 'john',
     password: 'blue',
+    role: 'guest',
   };
 
   const oldToken =

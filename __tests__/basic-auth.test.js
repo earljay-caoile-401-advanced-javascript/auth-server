@@ -4,6 +4,8 @@ const agent = supergoose(server.authServer);
 const Users = require('../lib/models/users.js');
 const base64 = require('base-64');
 
+console.log = jest.fn();
+
 describe('basic auth server', () => {
   const signinObj = {
     username: 'john',
@@ -27,6 +29,18 @@ describe('basic auth server', () => {
 
   it('can allow a new user to sign up', async () => {
     const signupResponse = await agent.post('/signup').send(signinObj);
+    expect(signupResponse.statusCode).toBe(200);
+    expect(!!signupResponse.text).toBeTruthy();
+  });
+
+  it('can allow a new user to sign up with a role with one time token enabled', async () => {
+    process.env.ONE_TIME_TOKEN = true;
+    const editor = {
+      username: 'ed',
+      password: 'da_editor',
+      role: 'editor',
+    };
+    const signupResponse = await agent.post('/signup').send(editor);
     expect(signupResponse.statusCode).toBe(200);
     expect(!!signupResponse.text).toBeTruthy();
   });
